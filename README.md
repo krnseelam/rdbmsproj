@@ -182,6 +182,41 @@ The backend implements centralized MySQL error mapping:
 
 ---
 
+## ⚡ Vercel Deployment Guide
+
+The repository includes native Vercel configuration (`vercel.json` + `api/index.js` serverless function):
+
+### 1. Push to GitHub
+Ensure the project is pushed to your GitHub repository:
+```bash
+git push -u origin main
+```
+
+### 2. Import into Vercel
+1. Go to [vercel.com](https://vercel.com) and log in.
+2. Click **"Add New Project"** and select `krnseelam/rdbmsproj`.
+3. Vercel will detect `vercel.json` automatically:
+   - **Framework Preset**: Other (or Vite)
+   - **Build Command**: `npm --prefix frontend install && npm --prefix frontend run build`
+   - **Output Directory**: `frontend/dist`
+
+### 3. Environment Variables on Vercel
+Add the following Environment Variables in the Vercel project settings:
+- `DB_HOST`: Your cloud MySQL host (e.g. from Aiven, PlanetScale, Railway, TiDB Cloud, AWS RDS)
+- `DB_PORT`: `3306` (or your cloud MySQL port)
+- `DB_USER`: Your MySQL username
+- `DB_PASSWORD`: Your MySQL password
+- `DB_NAME`: `music_label_db`
+- `DB_SSL`: `true` (enables SSL encryption for cloud MySQL connections)
+
+### 4. Deploy
+Click **Deploy**. Vercel will:
+1. Build the React frontend into static assets served globally on the edge.
+2. Convert the Express backend (`api/index.js`) into a serverless function responding to `/api/*`.
+3. Route all client-side routes (`/dashboard`, `/artists`, `/albums`, etc.) directly to the React application.
+
+---
+
 ## 👨‍💻 Student Information
 - **Student**: Karan Kumar Seelam
 - **Registration No.**: 2502050710
